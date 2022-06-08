@@ -1,0 +1,43 @@
+.notification-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  position: relative;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  height: 2.3rem;
+  width: 2.3rem;
+}
+
+.notification-btn:hover {
+  background-color: #f1f1f1;
+  border-radius: 1.15rem;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 0.6rem;
+  width: 0.6rem;
+  position: absolute;
+  font-size: 0.6rem;
+  top: 0;
+  background-color: red;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.2rem;
+  margin-left: 1.2rem;
+  margin-top: -0.3rem;
+}
+
+.dot {
+  position: absolute;
+  top: 0;
+  color: red;
+  font-size: 0.6rem;
+  border-radius: 0.5rem;
+  margin-left: 1.2rem;
+}

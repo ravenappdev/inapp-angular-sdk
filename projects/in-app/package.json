@@ -1,0 +1,14 @@
+{
+  "name": "@ravenapp/raven-inapp-angular",
+  "version": "1.0.14",
+  "peerDependencies": {
+    "@angular/common": "^10.0.14",
+    "@angular/core": "^10.0.14",
+    "ably": "^1.2.20",
+    "moment": "^2.29.2",
+    "sweetalert2": "^11.4.8"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

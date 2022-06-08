@@ -1,0 +1,33 @@
+<div>
+  <head>
+    <base href="/" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v6.1.1/css/all.css"
+    />
+  </head>
+  <div
+    class="main"
+    [ngStyle]="{ fontFamily: fontStyle ? fontStyle : 'inherit' }"
+  >
+    <app-bell-icon
+      [color]="color"
+      [indicatorType]="indicatorType"
+      [userId]="userId"
+      [appId]="appId"
+      *ngIf="displayStyle !== 'fullScreen'"
+    ></app-bell-icon>
+    <app-notifications
+      [color]="color"
+      [indicatorType]="indicatorType"
+      [fontStyle]="fontStyle"
+      [userId]="userId"
+      [appId]="appId"
+      [signature]="signature"
+      [onClickNotification]="onClickNotification"
+      [displayStyle]="displayStyle"
+      [position]="position"
+      [header]="header"
+    ></app-notifications>
+  </div>
+</div>

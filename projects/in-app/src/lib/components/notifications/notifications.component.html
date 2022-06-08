@@ -1,0 +1,219 @@
+<div
+  [ngStyle]="{
+    fontFamily: fontStyle ? fontStyle : 'inherit',
+    position: displayStyle === 'drawer' ? 'fixed' : 'relative'
+  }"
+  *ngIf="isOpen && displayStyle !== 'fullScreen'"
+  class="wrapper"
+  (click)="onWrapperClick($event)"
+>
+  <div
+    class="notifications"
+    *ngIf="isOpen && displayStyle !== 'fullScreen'"
+    [ngClass]="{
+      bubble: displayStyle === 'bubble',
+      left: displayStyle === 'bubble' && position === 'left',
+      center: displayStyle === 'bubble' && position === 'center',
+      right: displayStyle === 'bubble' && position === 'right',
+      drawerLeft: displayStyle === 'drawer' && position === 'left',
+      drawerRight: displayStyle === 'drawer' && position === 'right'
+    }"
+  >
+    <div class="notifications-title">
+      <div class="notifications-header">
+        <h3 class="refresh" [ngStyle]="{ marginBottom: '0.4rem' }">
+          Notifications
+        </h3>
+        <div class="btn-group">
+          <div class="tooltip">
+            <button
+              class="btn"
+              [ngStyle]="{ color: color ? color : 'blue' }"
+              (click)="saveData()"
+            >
+              <i class="fas fa-redo"></i>
+            </button>
+            <span class="tooltiptext">Refresh</span>
+          </div>
+          <div class="tooltip">
+            <button
+              class="btn"
+              [ngStyle]="{ color: color ? color : 'blue' }"
+              (click)="markAllRead()"
+            >
+              <i class="fas fa-check-double"></i>
+            </button>
+            <span class="tooltiptext">Mark all as read</span>
+          </div>
+          <button
+            class="btn"
+            (click)="toggleModal()"
+            [ngStyle]="{ color: 'rgb(104, 101, 101)', marginLeft: '1rem' }"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <p class="date">
+        {{ unread > 0 ? unread : "No" }}
+        unread notifications
+      </p>
+    </div>
+    <div class="dark-divider"></div>
+    <div
+      class="all-notifications"
+      [ngClass]="{
+        bubbleHeight: displayStyle === 'bubble',
+        fullHeight: displayStyle === 'drawer'
+      }"
+      *ngIf="!isLoading && notifications.length > 0"
+      #divToScroll
+    >
+      <div *ngFor="let notification of notifications">
+        <app-notification
+          *ngIf="notification"
+          [userId]="userId"
+          [appId]="appId"
+          [signature]="signature"
+          [notification]="notification"
+          [color]="color"
+          (unreadEmitter)="updateUnreadCount($event)"
+          [onClickNotification]="onClickNotification"
+        ></app-notification>
+        <div class="divider"></div>
+      </div>
+      <button
+        [ngStyle]="{ color: color ? color : 'blue' }"
+        *ngIf="showLoadButton"
+        class="load-more"
+        (click)="loadMore()"
+        #loadButton
+      >
+        LOAD MORE
+      </button>
+    </div>
+    <div
+      *ngIf="isLoading"
+      class="loading-main"
+      [ngClass]="{
+        bubbleHeight: displayStyle === 'bubble',
+        fullHeight: displayStyle === 'drawer'
+      }"
+    >
+      <div
+        class="loading"
+        [ngStyle]="{ borderTopColor: color ? color : 'blue' }"
+      ></div>
+    </div>
+    <div
+      *ngIf="!isLoading && notifications.length === 0"
+      class="loading-main"
+      [ngClass]="{
+        bubbleHeight: displayStyle === 'bubble',
+        fullHeight: displayStyle === 'drawer'
+      }"
+    >
+      <div class="no-notifications">
+        <i
+          class="fas fa-comment-slash"
+          [ngStyle]="{ color: color ? color : 'blue' }"
+        ></i>
+        <p>No notifications present</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="displayStyle === 'fullScreen'">
+  <div class="notifications-title" *ngIf="header">
+    <div class="notifications-header">
+      <h3 class="refresh" [ngStyle]="{ marginBottom: '0.4rem' }">
+        Notifications
+      </h3>
+      <div class="btn-group">
+        <div class="tooltip">
+          <button
+            class="btn"
+            [ngStyle]="{ color: color ? color : 'blue' }"
+            (click)="saveData()"
+          >
+            <i class="fas fa-redo"></i>
+          </button>
+          <span class="tooltiptext">Refresh</span>
+        </div>
+        <div class="tooltip">
+          <button
+            class="btn"
+            [ngStyle]="{ color: color ? color : 'blue' }"
+            (click)="markAllRead()"
+          >
+            <i class="fas fa-check-double"></i>
+          </button>
+          <span class="tooltiptext">Mark all as read</span>
+        </div>
+        <button
+          class="btn"
+          (click)="toggleModal()"
+          [ngStyle]="{ color: 'rgb(104, 101, 101)', marginLeft: '1rem' }"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <p class="date">
+      {{ unread > 0 ? unread : "No" }}
+      unread notifications
+    </p>
+  </div>
+  <div class="dark-divider"></div>
+  <div
+    class="all-notifications"
+    [ngClass]="{
+      bubbleHeight: displayStyle === 'bubble',
+      fullHeight: displayStyle === 'drawer'
+    }"
+    *ngIf="!isLoading && notifications.length > 0"
+    #divToScroll
+  >
+    <div *ngFor="let notification of notifications">
+      <app-notification
+        *ngIf="notification"
+        [userId]="userId"
+        [appId]="appId"
+        [signature]="signature"
+        [notification]="notification"
+        [color]="color"
+        (unreadEmitter)="updateUnreadCount($event)"
+        [onClickNotification]="onClickNotification"
+      ></app-notification>
+      <div class="divider"></div>
+    </div>
+    <button
+      [ngStyle]="{ color: color ? color : 'blue' }"
+      *ngIf="showLoadButton"
+      class="load-more"
+      (click)="loadMore()"
+      #loadButton
+    >
+      LOAD MORE
+    </button>
+  </div>
+  <div *ngIf="isLoading" class="loading-main bubbleHeight">
+    <div
+      class="loading"
+      [ngStyle]="{ borderTopColor: color ? color : 'blue' }"
+    ></div>
+  </div>
+  <div
+    *ngIf="!isLoading && notifications.length === 0"
+    class="loading-main bubbleHeight"
+  >
+    <div class="no-notifications">
+      <i
+        class="fas fa-comment-slash"
+        [ngStyle]="{ color: color ? color : 'blue' }"
+      ></i>
+      <p>No notifications present</p>
+    </div>
+  </div>
+</div>

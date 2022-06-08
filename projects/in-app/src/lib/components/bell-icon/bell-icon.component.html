@@ -1,0 +1,16 @@
+<button
+  (click)="toggleModal()"
+  class="notification-btn"
+  [ngStyle]="{ color: color ? color : 'blue' }"
+>
+  <i [ngClass]="[!isOpen ? regularBellIcon : solidBellIcon]"></i>
+  <span
+    *ngIf="!isOpen && count > 0 && indicatorType === 'count'"
+    class="count"
+    >{{ count }}</span
+  >
+  <span
+    *ngIf="!isOpen && count > 0 && indicatorType === 'dot'"
+    class="fas fa-circle dot"
+  ></span>
+</button>
