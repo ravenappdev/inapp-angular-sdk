@@ -9,7 +9,7 @@ Before setting up the SDK, please make sure you have followed the steps to [setu
 
 ### Step 2
 
-Run the following commands your project root directory :
+Run the following commands in your project root directory :
 
 ```
 npm i @ravenapp/raven-inapp-angular
