@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
 
 ### In-App Angular Demo App
 
-You can follow the below process to see the demo of In-App React SDK.
+You can follow the below process to see the demo of In-App Angular SDK.
 
 ### Step1 
 
