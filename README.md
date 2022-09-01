@@ -14,6 +14,7 @@ Run the following commands in your project root directory :
 ```
 npm i @ravenapp/raven-inapp-angular
 ```
+
 ### Step 3
 
 Import RavenInAppModule from '@ravenapp/raven-inapp-angular' and add it to the imports array in the app.module.ts file.
@@ -40,6 +41,28 @@ export class AppModule { }
 
 ### Step 4
 
+Intialize library by calling intialize method in app.component.ts
+
+```
+import { Component } from '@angular/core';
+import { CountService } from '@ravenapp/raven-inapp-angular';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  constructor(private countService: CountService) {}
+  ngOnInit(): void {
+    this.countService.intialize(<appId>, <userId>, <signature>);
+  }
+}
+
+```
+
+### Step 5
+
 Please refer to the below code to consume the InApp Angular SDK in your app.
 
 ```
@@ -47,9 +70,6 @@ Please refer to the below code to consume the InApp Angular SDK in your app.
       [color]="<color>"
       [indicatorType]="<indicator_type>"
       [fontStyle]="<fontStyle>"
-      [userId]="<user_id>"
-      [appId]="<app_id>"
-      [signature]="<signature>"
       [displayStyle]="<displayStyle>"
       [position]="<position>"
       [header]"<true|false>"
@@ -71,9 +91,15 @@ Please refer to the below code to consume the InApp Angular SDK in your app.
 |position| If the displayStyle is 'drawer' then position accepts two values, i.e 'left' and 'right'. If the display style is 'bubble' then position accepts three values, i.e 'left', 'center' and 'right'.|'left', 'right', 'center' (only strings) |
 |header|header can be either true or false. You can pass true, if you want the notification header which has unread count, refresh button, mark all read and close button. You can pass false, if you don't want the notification header. | true or false (boolean) |
 
-* Note: userId, appId and signature are the compulsory attributes, remaining are optional.
+* Do not forget to call deintialize method when user logs out otherwise user will receive notifications event after logging out. You can access the deintialize method by importing CountService.
 * When display style is 'fullScreen', there will not be bell icon. Inorder to access new notification's count, import the CountService and subscribe the count.
+* When display style is 'fullScreen', you can remove the header by passing header={false} to the inapp-notification-center component. In that case, you can access to the unread count, mark all read, reload data by importing CountService.
+  - deintialize - <CountServiceObj>.deintialize()
+  - mark all read - <CountServiceObj>.markAllRead()
+  - reload data - <CountServiceObj>.reloadData()
+  - unread count - <CountServiceObj>.unreadCount
 ```
+
 import { Component, OnInit } from '@angular/core';
 import { CountService } from '@ravenapp/raven-inapp-angular';
 
@@ -87,6 +113,7 @@ export class AppComponent implements OnInit {
   constructor(private countService: CountService) {}
   ngOnInit(): void {
     this.countService.count.subscribe((count: any) => console.log(count));
+    this.countService.unreadCount.subscribe((unread: any) => console.log(unread));
   }
 }
  ```
